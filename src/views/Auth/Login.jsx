@@ -25,7 +25,7 @@ export default function Login() {
           // we need to redirect to.
           // See https://v5.reactrouter.com/web/api/history for the appropriate method to use
           if (loginWasSuccessful) {
-            history.push('/treehouse')
+            history.replace(from)
           }
           
         } catch (error) {
