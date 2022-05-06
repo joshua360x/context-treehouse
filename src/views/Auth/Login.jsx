@@ -16,16 +16,25 @@ export default function Login() {
   const { from } = location.state || { from: { pathname: '/' } };
 
   const handleLogin = (event) => {
-    event.preventDefault();
-    const loginWasSuccessful = auth.login(formState.email, formState.password);
-
-    // TODO: If login was unsuccessful, set an error with a message
-    // to display to the user that their login failed.
-    //
-    // If login was successful, use the history hook
-    // from React Router to replace the current URL with the URL
-    // we need to redirect to.
-    // See https://v5.reactrouter.com/web/api/history for the appropriate method to use
+    try {
+      event.preventDefault();
+      const loginWasSuccessful = auth.login(formState.email, formState.password);
+      console.log('loginWasSuccessful :>> ', loginWasSuccessful);
+          // If login was successful, use the history hook
+          // from React Router to replace the current URL with the URL
+          // we need to redirect to.
+          // See https://v5.reactrouter.com/web/api/history for the appropriate method to use
+          if (loginWasSuccessful) {
+            history.push('/treehouse')
+          }
+          
+        } catch (error) {
+          
+          // TODO: If login was unsuccessful, set an error with a message
+          // to display to the user that their login failed.
+          //
+         setError('Error, might want to check your login Information...')
+    }
   };
 
   return (
@@ -37,12 +46,17 @@ export default function Login() {
           id="email"
           name="email"
           type="email"
-        />{' '}
+          value={formState.email}
+          onChange={handleFormChange}
+          />{' '}
         <label>Password</label>
         <input
           id="password"
           name="password"
           type="password"
+          value={formState.password}
+          onChange={handleFormChange}
+
         />
         <button type="submit" aria-label="Sign In">
           Sign in
